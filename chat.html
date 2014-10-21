@@ -1,0 +1,18 @@
+<head>
+  <title>chat</title>
+</head>
+
+<body>
+  <h1>Welcome to Meteor chat!</h1>
+
+  {{> chat}}
+</body>
+
+<template name="chat">
+  <button class="clickable">Click Me</button> or <button>Click me</button>
+  <p>You've pressed the button {{counter}} times.</p>
+
+  <p>Doubled counter: {{doubleNumber counter}}</p>
+
+  <p>Doubled number four: 4 * 2 =  {{doubleNumber 4}}</p>
+</template>
