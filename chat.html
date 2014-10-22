@@ -9,10 +9,9 @@
 </body>
 
 <template name="chat">
-  <button class="clickable">Click Me</button> or <button>Click me</button>
-  <p>You've pressed the button {{counter}} times.</p>
-
-  <p>Doubled counter: {{doubleNumber counter}}</p>
-
-  <p>Doubled number four: 4 * 2 =  {{doubleNumber 4}}</p>
+  {{#each messages}}
+    <p>{{text}}</p>
+  {{/each}}
+  <textarea></textarea>
+  <p><button class="clickable">Submit</button></p>
 </template>
