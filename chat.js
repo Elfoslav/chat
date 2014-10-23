@@ -1,11 +1,15 @@
 Messages = new Mongo.Collection('messages');
+
 if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault("counter", 0);
+  Meteor.subscribe('messages');
 
   Template.chat.helpers({
     messages: function () {
-      return Messages.find();
+      return Messages.find({}, {
+        limit: 2
+      });
     }
   });
 
@@ -16,8 +20,10 @@ if (Meteor.isClient) {
 
       console.log('inserting message: ', message);
 
-      Messages.insert({
-        text: message
+      Meteor.call('addMessage', message, function(err, result) {
+        if (err) {
+          console.log(err);
+        }
       });
     }
   });
@@ -26,5 +32,19 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
+  });
+
+  Meteor.publish('messages', function() {
+    return Messages.find({}, {
+      limit: 5
+    });
+  });
+
+  Meteor.methods({
+    addMessage: function(text) {
+      Messages.insert({
+        text: text
+      });
+    }
   });
 }
