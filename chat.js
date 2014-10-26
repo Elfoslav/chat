@@ -8,7 +8,7 @@ if (Meteor.isClient) {
   Template.chat.helpers({
     messages: function () {
       return Messages.find({}, {
-        limit: 2
+        sort: { timestamp: 1 }
       });
     }
   });
@@ -36,14 +36,16 @@ if (Meteor.isServer) {
 
   Meteor.publish('messages', function() {
     return Messages.find({}, {
-      limit: 5
+      limit: 5,
+      sort: { timestamp: -1 }
     });
   });
 
   Meteor.methods({
     addMessage: function(text) {
       Messages.insert({
-        text: text
+        text: text,
+        timestamp: new Date()
       });
     }
   });
