@@ -3,7 +3,9 @@ Messages = new Mongo.Collection('messages');
 if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault("counter", 0);
-  Meteor.subscribe('messages');
+
+  var messagesLimit = 5;
+  Meteor.subscribe('messages', messagesLimit);
 
   Template.chat.helpers({
     messages: function () {
@@ -30,13 +32,14 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+  Meteor.users.remove({});
   Meteor.startup(function () {
     // code to run on server at startup
   });
 
-  Meteor.publish('messages', function() {
+  Meteor.publish('messages', function(limit) {
     return Messages.find({}, {
-      limit: 5,
+      limit: limit,
       sort: { timestamp: -1 }
     });
   });
