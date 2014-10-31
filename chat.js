@@ -32,7 +32,6 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-  Meteor.users.remove({});
   Meteor.startup(function () {
     // code to run on server at startup
   });
